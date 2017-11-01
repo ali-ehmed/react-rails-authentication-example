@@ -1,0 +1,12 @@
+@import 'components/App';
+@import 'components/Navigation';
+
+body {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+#root {
+  width: 65%;
+  margin: 0 auto;
+}
