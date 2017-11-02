@@ -30,7 +30,11 @@ class NavbarAuth extends Component {
               <RouterNavLink to="/users/sign_in" activeClassName="active" className="nav-link">Login</RouterNavLink>
             </NavItem>
         ) : (
-            <NavDropdown isOpen={this.state.dropdownOpen} toggle={this.dropDownToggle}>
+          [
+            <NavItem key="1">
+              <RouterNavLink to="/listings" activeClassName="active" className="nav-link">Discover</RouterNavLink>
+            </NavItem>,
+            <NavDropdown key="2" isOpen={this.state.dropdownOpen} toggle={this.dropDownToggle}>
               <DropdownToggle nav caret>
                 { user.full_name }
               </DropdownToggle>
@@ -44,6 +48,7 @@ class NavbarAuth extends Component {
                 </DropdownItem>
               </DropdownMenu>
             </NavDropdown>
+          ]
         )
     )
   }

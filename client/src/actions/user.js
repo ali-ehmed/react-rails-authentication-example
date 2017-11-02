@@ -38,7 +38,7 @@ export function signIn(params, router) {
       dispatch(authenticationSuccess(response));
       router.history.push('/', {
         flash: {
-          type: 'success',
+          type: 'notice',
           message: 'You have signed in successfully.'
         }
       });
@@ -46,7 +46,7 @@ export function signIn(params, router) {
       dispatch(authenticationFailure());
       router.history.push(router.location.pathname, {
         flash: {
-          type: 'danger',
+          type: 'alert',
           message: 'Invalid email or password.'
         }
       });
@@ -60,7 +60,7 @@ export function signOut(router) {
     dispatch(destroyAuthentication());
     router.history.push(router.location.pathname, {
       flash: {
-        type: 'success',
+        type: 'notice',
         message: 'You have signed out successfully.'
       }
     });

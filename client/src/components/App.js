@@ -14,6 +14,7 @@ import Home from './Home';
 import AboutUs from './AboutUs';
 import Contact from './Contact';
 import LoginContainer from '../containers/LoginContainer';
+import ListingsContainer from '../containers/ListingsContainer';
 
 // HOC
 import RequireAuth from '../hoc/RequireAuth'
@@ -58,6 +59,7 @@ class App extends Component {
             <Route exact path="/" component={Home}></Route>
             <Route path="/about_us" component={AboutUs}></Route>
             <Route path="/contact_us" component={Contact}></Route>
+            <Route path="/listings" component={RequireAuth(ListingsContainer)}></Route>
             <Route exact path="/users/sign_in" component={LoginContainer}></Route>
           </Switch>
           <p className="App-intro">

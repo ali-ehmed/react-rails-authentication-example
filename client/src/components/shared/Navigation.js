@@ -27,12 +27,12 @@ class Navigation extends Component {
         <div>
           <header className="nav-header clearfix">
             <Row>
-              <Col md="6" xs="12">
+              <Col md="3" xs="12">
                 <RouterNavLink exact to="/" activeClassName="active" className="navbar-brand">
                   <h3 className="text-muted">Market Place</h3>
                 </RouterNavLink>
               </Col>
-              <Col md="6" xs="12">
+              <Col md="9" xs="12">
                 <Nav pills className="justify-content-end">
                   <NavItem>
                     <RouterNavLink exact to="/about_us" activeClassName="active" className="nav-link">About Us</RouterNavLink>
