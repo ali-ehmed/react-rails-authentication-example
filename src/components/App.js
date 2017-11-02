@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 // React-Router
 import {
   Route,
-  Switch
+  Switch,
+  withRouter
 } from 'react-router-dom';
 
 // Components
@@ -12,6 +13,7 @@ import FlashMessage from './shared/FlashMessage';
 import Home from './Home';
 import AboutUs from './AboutUs';
 import Contact from './Contact';
+import LoginContainer from '../containers/LoginContainer';
 
 // HOC
 import RequireAuth from '../hoc/RequireAuth'
@@ -40,7 +42,7 @@ class App extends Component {
   renderFlashMessages = (flash) => {
     if(!isEmpty(flash)) {
       return(
-          <FlashMessage type={flash.type} message={flash.message} />
+          <FlashMessage type={flash.type} message={flash.message} flashState={this} />
       )
     }
   };
@@ -56,6 +58,7 @@ class App extends Component {
             <Route exact path="/" component={Home}></Route>
             <Route path="/about_us" component={AboutUs}></Route>
             <Route path="/contact_us" component={Contact}></Route>
+            <Route exact path="/users/sign_in" component={LoginContainer}></Route>
           </Switch>
           <p className="App-intro">
             To get started, edit <code>src/App.js</code> and save to reload.
@@ -66,4 +69,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);

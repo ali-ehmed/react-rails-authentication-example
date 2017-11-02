@@ -1,0 +1,16 @@
+.nav-header {
+  padding-bottom: 1rem;
+  border-bottom: .05rem solid #e5e5e5;
+  margin-bottom: 1rem; }
+  .nav-header h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 3rem; }
+
+body {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem; }
+
+#root {
+  width: 65%;
+  margin: 0 auto; }

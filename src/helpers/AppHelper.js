@@ -12,8 +12,9 @@ export const FlashMessageType = (messageType) => {
       break;
     case 'warning':
       alertType = 'warning';
-    case 'danger':
-      alertType = 'danger';
+      break;
+    default:
+      return alertType;
   }
 
   return alertType;

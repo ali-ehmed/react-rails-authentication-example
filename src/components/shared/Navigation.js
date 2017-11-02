@@ -1,29 +1,24 @@
 import React, { Component } from 'react';
 import {
   Row, Col,
-  Nav, NavItem, NavLink} from 'reactstrap';
+  Nav, NavItem,
+} from 'reactstrap';
 import { withRouter, NavLink as RouterNavLink } from 'react-router-dom';
+
+import NavbarAuthContainer from '../../containers/NavbarAuthContainer';
 
 class Navigation extends Component {
   constructor(props) {
     super(props);
 
     this.toggle = this.toggle.bind(this);
-    this.dropDownToggle = this.dropDownToggle.bind(this);
     this.state = {
-      isOpen: false,
-      dropdownOpen: false
+      isOpen: false
     };
   }
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
-    });
-  }
-
-  dropDownToggle() {
-    this.setState({
-      dropdownOpen: !this.state.dropdownOpen
     });
   }
 
@@ -42,21 +37,12 @@ class Navigation extends Component {
                   <NavItem>
                     <RouterNavLink exact to="/about_us" activeClassName="active" className="nav-link">About Us</RouterNavLink>
                   </NavItem>
-                  {/*<NavDropdown isOpen={this.state.dropdownOpen} toggle={this.dropDownToggle}>*/}
-                  {/*<DropdownToggle nav caret>*/}
-                  {/*Dropdown*/}
-                  {/*</DropdownToggle>*/}
-                  {/*<DropdownMenu>*/}
-                  {/*<DropdownItem header>Header</DropdownItem>*/}
-                  {/*<DropdownItem disabled>Action</DropdownItem>*/}
-                  {/*<DropdownItem>Another Action</DropdownItem>*/}
-                  {/*<DropdownItem divider />*/}
-                  {/*<DropdownItem>Another Action</DropdownItem>*/}
-                  {/*</DropdownMenu>*/}
-                  {/*</NavDropdown>*/}
+
                   <NavItem>
                     <RouterNavLink exact to="/contact_us" activeClassName="active" className="nav-link">Contact</RouterNavLink>
                   </NavItem>
+
+                  <NavbarAuthContainer />
                 </Nav>
               </Col>
             </Row>

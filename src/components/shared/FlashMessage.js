@@ -15,6 +15,9 @@ class FlashMessage extends Component {
 
   handleAlertDismiss = () => {
     this.setState({ visible: false });
+
+    // Clearing App Component Flash State on Alert Dismiss
+    this.props.flashState.setState({ flash: {} });
   };
 
   render() {
