@@ -18,7 +18,6 @@ class ListingsContainer extends Component {
 }
 
 function mapStatesToProps(state) {
-  console.log(state)
   return {
     listings: state.listings.data,
     errorMessage: state.listings.errorMessage,

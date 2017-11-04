@@ -10,7 +10,7 @@ const Home = () => {
         <hr className="my-2" />
         <p>It uses utility classes for typgraphy and spacing to space content out within the larger container.</p>
         <p className="lead text-center">
-          <Link to='/listings' className="btn-lg btn-success btn-outline">Explore</Link>
+          <Link to='/listings' className="btn btn-lg btn-outline-success">Explore</Link>
         </p>
       </Jumbotron>
   )
