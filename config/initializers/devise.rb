@@ -4,16 +4,16 @@ Devise.setup do |config|
   config.jwt do |jwt|
     jwt.secret = Rails.application.secrets.jwt_secret
     jwt.dispatch_requests = [
-        ['POST', %r{^/dispatch_path_1$}],
-        ['GET', %r{^/dispatch_path_2$}],
+        # ['POST', %r{^/user_registration_path$}]
+        ['POST', %r{^/api/users$}]
     ]
     jwt.revocation_requests = [
-        ['DELETE', %r{^/revocation_path_1$}],
-        ['GET', %r{^/revocation_path_2$}],
+        ['DELETE', %r{^/api/users/sign_out$}],
     ]
     jwt.request_formats = {
         user: [:json]
     }
+    # jwt.expiration_time = 60
   end
 
   # The secret key used by Devise. Devise uses this key to generate

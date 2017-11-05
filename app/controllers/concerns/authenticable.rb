@@ -3,6 +3,13 @@ module Authenticable
 
   included do
     helper_method :user_signed_in?, :current_user
+
+    before_action do
+      if devise_controller?
+        self.class.clear_respond_to
+        self.class.respond_to :json
+      end
+    end
   end
 
   protected
@@ -12,8 +19,8 @@ module Authenticable
         json! :unauthorized, message: 'Not Authenticated' and return
       end
 
-      @current_user = User.find(auth_token['user_id'])
-    rescue JWT::VerificationError, JWT::DecodeError
+      @current_user = User.find_by!(id: auth_token['user_id'], jti: auth_token['jti'])
+    rescue ActiveRecord::RecordNotFound, JWT::VerificationError, JWT::DecodeError
       json! :unauthorized, message: 'Not Authenticated' and return
     end
 
@@ -22,8 +29,11 @@ module Authenticable
     end
 
     def user_signed_in?
-      puts auth_token
       current_user.present?
+    end
+
+    def revoke_jwt!
+      current_user.class.revoke_jwt(nil, current_user)
     end
 
   private
@@ -33,7 +43,7 @@ module Authenticable
     end
 
     def auth_token
-      @auth_token ||= JwtWrapper.decode(http_token)
+      @auth_token ||= JWT.decode http_token, Rails.application.secrets.jwt_secret
     end
 
     def user_id_in_token?

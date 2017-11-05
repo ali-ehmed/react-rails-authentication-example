@@ -30,7 +30,7 @@ gem 'foreman', '~> 0.84.0'
 gem 'faker', :git => 'git://github.com/stympy/faker.git', :branch => 'master'
 
 gem 'devise'
-gem 'devise-jwt', '~> 0.4.1'
+gem 'devise-jwt'
 
 
 group :development, :test do

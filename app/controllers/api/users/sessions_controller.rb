@@ -3,25 +3,17 @@ module Api
     class SessionsController < Devise::SessionsController
       before_action :check_signed_in?, only: [:create]
       before_action :authenticate_user!, only: [:destroy]
-      skip_before_action :verify_signed_out_user, only: [:destroy]
-
-      def create
-        self.resource = warden.authenticate!(auth_options)
-        sign_in(resource_name, resource)
-        json! :ok
-      end
+      skip_before_action :verify_signed_out_user
 
       def destroy
-        (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
-        json! :ok
+        revoke_jwt!
+        json! :ok, message: I18n.t('devise.sessions.signed_out')
       end
 
       private
 
         def check_signed_in?
-          if user_signed_in?
-            json! :forbidden, message: 'You are already signed in.'
-          end
+          json! :forbidden, message: 'You are already signed in.' if user_signed_in?
         end
     end
   end
