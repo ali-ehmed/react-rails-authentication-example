@@ -8,8 +8,10 @@ const renderItem = (item, currentUser) => {
     <Col key={item.id} md="4">
       <Card>
         <CardBody>
-          <CardTitle className="title">{item.name}</CardTitle>
-          <CardSubtitle><i>{item.designer}</i></CardSubtitle>
+          <CardTitle className="title">
+            <a href="#">{item.name}</a>
+          </CardTitle>
+          <CardSubtitle>{item.category}</CardSubtitle>
         </CardBody>
         <img width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" />
         <CardBody>
