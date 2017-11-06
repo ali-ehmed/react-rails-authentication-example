@@ -1,4 +1,4 @@
-// import axios from 'axios';
+import axios from 'axios';
 
 import {
   USER_AUTH_SUCCESS,
@@ -28,29 +28,32 @@ export function destroyAuthentication() {
 
 export function signIn(params, router) {
   return (dispatch) => {
-    if (params.email === 'aliahmed@example.com' && params.password === 'aliahmed') {
-      const response = {
-        id: 1,
-        full_name: 'Ali Ahmed',
-        email: 'aliahmed@example.com'
-      };
-      localStorage.setItem('user', JSON.stringify(response));
-      dispatch(authenticationSuccess(response));
+    const request = axios({
+      method: 'post',
+      url: '/api/users/sign_in',
+      data: { user: params }
+    });
+
+    request.then((response) => {
+      console.log(response.headers)
+      localStorage.setItem('user', JSON.stringify(response.data));
+      dispatch(authenticationSuccess(response.data));
+
       router.history.push('/', {
         flash: {
           type: 'notice',
           message: 'You have signed in successfully.'
         }
       });
-    } else {
+    }).catch((error) => {
       dispatch(authenticationFailure());
       router.history.push(router.location.pathname, {
         flash: {
           type: 'alert',
-          message: 'Invalid email or password.'
+          message: error.response.data.error
         }
       });
-    }
+    });
   }
 }
 
