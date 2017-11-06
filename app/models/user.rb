@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-  Warden::JWTAuth::Interfaces::RevocationStrategy
   include Devise::JWT::RevocationStrategies::JTIMatcher
 
   # Include default devise modules. Others available are:

@@ -1,8 +1,9 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 log/*.log
-.idea/*
+.idea/
 
+config/database.yml
 # Client App React DOM
 
 # dependencies
@@ -27,4 +28,5 @@ clientyarn-error.log*
 
 clientsrc/**/*.css
 
+# Except these files
 !client/src/**/*index.css
