@@ -3,7 +3,7 @@ module Api
     before_action :authenticate_user!
 
     def index
-      json! :ok, listings: Listing.all.as_json
+      json! :ok, listings: current_user.listings.as_json
     end
   end
 end

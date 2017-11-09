@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, compose, applyMiddleware } from 'redux';
 import thunk from "redux-thunk";
-import { BrowserRouter as Router } from 'react-router-dom';
+import history from './history';
+import { ConnectedRouter, connectRouter, routerMiddleware } from 'connected-react-router';
 
 // Reducers
 import Reducers from './reducers';
@@ -15,34 +16,25 @@ import 'bootstrap/dist/css/bootstrap.css';
 // Components
 import App from './components/App';
 
-// Action Creator
-import { authenticationSuccess } from './actions/user';
-
 import registerServiceWorker from './registerServiceWorker';
 
+// Build the middleware for intercepting and dispatching navigation actions
+const routesMiddleware = routerMiddleware(history);
 
 const store = createStore(
-    Reducers,
-    applyMiddleware(thunk)
+  connectRouter(history)(Reducers),
+  compose(applyMiddleware(thunk, routesMiddleware))
 );
 
-// Uncomment this if you have authentication setup
-
-// Check for user and update application state if required
-const authenticatedUser = localStorage.getItem('user');
-if (authenticatedUser) {
-  store.dispatch(authenticationSuccess(JSON.parse(authenticatedUser)));
-}
-
 store.subscribe(() => {
-  console.log(store.getState())
+  console.log(store.getState());
 });
 
 ReactDOM.render(
     <Provider store={store}>
-      <Router>
+      <ConnectedRouter history={history}>
         <App />
-      </Router>
+      </ConnectedRouter>
     </Provider>
     , document.getElementById('root'));
 registerServiceWorker();

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
-class AboutUs extends Component {
+
+export default class AboutUs extends Component {
   render() {
-    return(
+    return (
       <div>
         <h2>About Us</h2>
         <p>Lorem Ipsum Text</p>
@@ -10,6 +11,4 @@ class AboutUs extends Component {
     )
   }
 }
-
-export default AboutUs;
 

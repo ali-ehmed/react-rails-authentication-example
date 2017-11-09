@@ -39,14 +39,17 @@ module Authenticable
   private
 
     def http_token
-      @http_token ||= request.headers['Authorization']
+      @http_token ||= request.headers['Authorization'].try(:split, ' ').try(:last)
     end
 
     def auth_token
-      @auth_token ||= JWT.decode http_token, Rails.application.secrets.jwt_secret
+      @auth_token ||= JWT.decode(http_token, Rails.application.secrets.jwt_secret).try(:first)
+    rescue JWT::DecodeError
+      nil
     end
 
     def user_id_in_token?
+      puts auth_token
       http_token && auth_token && auth_token['user_id'].to_i
     end
 end

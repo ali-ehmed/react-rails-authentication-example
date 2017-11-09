@@ -12,11 +12,11 @@ function mapStatesToProps(state) {
   };
 }
 
-const mapDispatchToProps = (dispatch, props) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     onLogOut: (e) => {
       e.preventDefault();
-      dispatch(signOut(props));
+      dispatch(signOut());
     }
   }
 };
