@@ -16,8 +16,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 // Components
 import App from './components/App';
 
-import { verifyServerAuthentication } from './actions/user';
-
 import registerServiceWorker from './registerServiceWorker';
 
 // Build the middleware for intercepting and dispatching navigation actions
