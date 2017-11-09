@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 // React-Router
 import {
@@ -17,10 +18,13 @@ import LoginContainer from '../containers/LoginContainer';
 import ListingsContainer from '../containers/ListingsContainer';
 
 // HOC
-import RequireAuth from '../hoc/RequireAuth'
+import UserIsAuthenticated from '../hoc/RequireAuth';
 
 // Helpers
 import { isEmpty } from '../helpers/AppHelper';
+
+// Action Creator
+import { verifyServerAuthentication } from '../actions/user';
 
 class App extends Component {
   constructor() {
@@ -29,6 +33,10 @@ class App extends Component {
       flash: {}
     };
   };
+
+  componentDidMount() {
+    this.props.verifyServerAuthentication();
+  }
 
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
@@ -55,11 +63,12 @@ class App extends Component {
         <div className="container">
           <Navigation />
           { flashMessages }
+
           <Switch>
             <Route exact path="/" component={Home}></Route>
-            <Route path="/about_us" component={AboutUs}></Route>
+            <Route path="/about_us" component={UserIsAuthenticated(AboutUs)}></Route>
             <Route path="/contact_us" component={Contact}></Route>
-            <Route path="/listings" component={RequireAuth(ListingsContainer)}></Route>
+            <Route path="/listings" component={UserIsAuthenticated(ListingsContainer)}></Route>
             <Route exact path="/users/sign_in" component={LoginContainer}></Route>
           </Switch>
           <p className="App-intro">
@@ -71,4 +80,16 @@ class App extends Component {
   }
 }
 
-export default withRouter(App);
+function mapStatesToProps(state) {
+  return {
+    isAuthenticated: state.user.isAuthenticated
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    verifyServerAuthentication: () => dispatch(verifyServerAuthentication())
+  }
+};
+
+export default (withRouter(connect(mapStatesToProps, mapDispatchToProps)(App)));

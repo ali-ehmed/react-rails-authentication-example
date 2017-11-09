@@ -3,17 +3,21 @@
 Devise.setup do |config|
   config.jwt do |jwt|
     jwt.secret = Rails.application.secrets.jwt_secret
+
+    # This is where JWT is returned back in Response Header "Authorization"
     jwt.dispatch_requests = [
-        # ['POST', %r{^/user_registration_path$}]
-        ['POST', %r{^/api/users$}]
+        ['POST', %r{^/api/users/sign_in$}]
     ]
+
+    # This is where the revoke_token method is call
     jwt.revocation_requests = [
         ['DELETE', %r{^/api/users/sign_out$}],
     ]
     jwt.request_formats = {
         user: [:json]
     }
-    # jwt.expiration_time = 60
+    # Default JWT Expiration is 3600 Seconds
+    # jwt.expiration_time = 6
   end
 
   # The secret key used by Devise. Devise uses this key to generate

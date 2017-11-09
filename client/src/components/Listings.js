@@ -9,11 +9,11 @@ const renderItem = (item, currentUser) => {
       <Card>
         <CardBody>
           <CardTitle className="title">
-            <a href="#">{item.name}</a>
+            <a href="/listings">{item.name}</a>
           </CardTitle>
           <CardSubtitle>{item.category}</CardSubtitle>
         </CardBody>
-        <img width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" />
+        <img width="100%" alt='' src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" />
         <CardBody>
           <CardSubtitle>Price: <strong>{item.price}</strong></CardSubtitle>
           <hr/>

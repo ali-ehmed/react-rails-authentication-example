@@ -24,9 +24,9 @@ export default function (state = initialState, action) {
     case FETCH_LISTINGS_FAILURE:
       return {
         ...state,
-        errorMessage: action.error
+        data: action.error
       };
     default:
       return state;
   }
-}
+};

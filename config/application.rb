@@ -30,10 +30,10 @@ module MarketplaceAppOnReactRails
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins '*'
-        resource '*',
+        resource '/api/users/sign_in',
                  headers: :any,
-                 methods: [:get, :post, :put, :patch, :delete, :options, :head],
-                 expose: ['Authorization']
+                 methods: [:post, :options],
+                 expose: ['authorization']
       end
     end
   end

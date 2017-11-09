@@ -14,13 +14,13 @@ function mapStatesToProps(state) {
   };
 }
 
-const mapDispatchToProps = (dispatch, props) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     onLogin: (e) => {
       e.preventDefault();
       const form = e.target;
       const data = serialize(form, { hash: true });
-      dispatch(signIn(data, props));
+      dispatch(signIn(data));
     }
   }
 };
