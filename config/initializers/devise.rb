@@ -6,7 +6,8 @@ Devise.setup do |config|
 
     # This is where JWT is returned back in Response Header "Authorization"
     jwt.dispatch_requests = [
-        ['POST', %r{^/api/users/sign_in$}]
+        ['POST', %r{^/api/users/sign_in$}],
+        ['POST', %r{^/api/users$}]
     ]
 
     # This is where the revoke_token method is call
@@ -276,8 +277,8 @@ Devise.setup do |config|
   # change the failure app, you can configure them inside the config.warden block.
   #
   # config.warden do |manager|
-  #   manager.intercept_401 = false
-  #   manager.default_strategies(scope: :user).unshift :some_external_strategy
+    # manager.intercept_401 = false
+    # manager.default_strategies(scope: :user).unshift :some_external_strategy
   # end
 
   # ==> Mountable engine configurations

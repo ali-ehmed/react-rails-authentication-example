@@ -1,6 +1,9 @@
 class ApplicationController < ActionController::API
   include ActionController::MimeResponds
   include ActionController::Helpers
+  include ActionView::Helpers::TagHelper
+  include ActionView::Context
+
   include Authenticable
 
   # All HTTP Status Code here in Constant

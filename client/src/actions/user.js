@@ -1,7 +1,8 @@
+import React  from 'react';
 import axios from 'axios';
 import { push } from 'react-router-redux';
 import history from '../history';
-import { getParams } from '../helpers/AppHelper';
+import { getParams, isEmpty } from '../helpers/AppHelper';
 
 import {
   USER_AUTH_IN_PROGRESS,
@@ -10,33 +11,89 @@ import {
   USER_AUTH_LOGOUT_SUCCESS
 } from './types';
 
-export function authenticating() {
+
+export const authenticating = () => {
   return {
     type: USER_AUTH_IN_PROGRESS
   };
 }
 
-export function authenticationSuccess(payload) {
+export const authenticationSuccess = (payload) => {
   return {
     type: USER_AUTH_SUCCESS,
     payload
   };
 }
 
-export function authenticationFailure(errorMessages) {
+export const authenticationFailure = (errorMessages) => {
   return {
     type: USER_AUTH_FAILURE,
     errorMessages: errorMessages
   };
 }
 
-export function destroyAuthentication() {
+export const destroyAuthentication = () => {
   return {
     type: USER_AUTH_LOGOUT_SUCCESS
   };
 }
 
-export function signIn(params) {
+export const signUp = (params) => {
+  return (dispatch) => {
+    if (isEmpty(params)) {
+      dispatch(authenticationFailure());
+      dispatch(push(history.location.pathname, {
+        flash: {
+          type: 'alert',
+          message: "Please fill the fields"
+        }
+      }));
+      return Promise.resolve();
+    }
+
+    axios({
+      method: 'post',
+      url: '/api/users',
+      data: { user: params }
+    }).then((response) => {
+      if (response.data.status === 200) {
+        response.data.user.auth_token = response.headers.authorization;
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        dispatch(authenticationSuccess(response.data.user));
+
+        dispatch(push('/', {
+          flash: {
+            type: 'notice',
+            message: '<h4 className="alert-heading">Welcome!</h4>' +
+              '<p>You have successfully registered to our site.</p>'
+          }
+        }));
+      } else {
+        console.log('Registration Error', response.data.errors);
+        dispatch(authenticationFailure());
+        dispatch(push(history.location.pathname, {
+          flash: {
+            type: 'alert',
+            message: '<h4 className="alert-heading">Please Review Errors Below!</h4>' +
+            response.data.errors
+          },
+          user: response.data.user
+        }));
+      }
+
+    }).catch((error) => {
+      dispatch(authenticationFailure());
+      dispatch(push(history.location.pathname, {
+        flash: {
+          type: 'alert',
+          message: 'Something went wrong'
+        }
+      }));
+    });
+  };
+}
+
+export const signIn = (params) => {
   return (dispatch) => {
     const request = axios({
       method: 'post',
@@ -70,7 +127,7 @@ export function signIn(params) {
   };
 }
 
-export function signOut() {
+export const signOut = () => {
   return (dispatch, getState) => {
     const request = axios({
       method: 'delete',

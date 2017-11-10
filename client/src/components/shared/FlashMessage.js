@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Alert } from 'reactstrap';
 import PropTypes from "prop-types";
+import Parser from 'html-react-parser';
 
 import { FlashMessageType } from '../../helpers/AppHelper';
 
@@ -24,7 +25,7 @@ class FlashMessage extends Component {
     const { type, message } = this.props;
     return(
         <Alert color={FlashMessageType(type)} isOpen={this.state.visible} toggle={this.onDismiss}>
-          { message || "I am an alert and I can be dismissed!" }
+          { Parser(message) || "I am an alert and I can be dismissed!" }
         </Alert>
     );
   }

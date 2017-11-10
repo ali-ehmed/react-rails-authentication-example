@@ -14,7 +14,8 @@ import FlashMessage from './shared/FlashMessage';
 import Home from './Home';
 import AboutUs from './AboutUs';
 import Contact from './Contact';
-import LoginContainer from '../containers/LoginContainer';
+import { Login, Register }from "../components/auth/Devise";
+import DeviseContainer from '../containers/DeviseContainer';
 import ListingsContainer from '../containers/ListingsContainer';
 
 // HOC
@@ -69,7 +70,8 @@ class App extends Component {
             <Route path="/about_us" component={UserIsAuthenticated(AboutUs)}></Route>
             <Route path="/contact_us" component={Contact}></Route>
             <Route path="/listings" component={UserIsAuthenticated(ListingsContainer)}></Route>
-            <Route exact path="/users/sign_in" component={LoginContainer}></Route>
+            <Route exact path="/users/sign_in" component={DeviseContainer(Login)}></Route>
+            <Route exact path="/users/sign_up" component={DeviseContainer(Register)}></Route>
           </Switch>
           <p className="App-intro">
             To get started, edit <code>src/App.js</code> and save to reload.

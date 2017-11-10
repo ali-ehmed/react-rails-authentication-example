@@ -28,6 +28,7 @@ export default function (state = initialState, action) {
     case USER_AUTH_FAILURE:
       return {
         ...state,
+        isFetching: false,
         data: {
           errorMessage: action.errorMessage
         }
