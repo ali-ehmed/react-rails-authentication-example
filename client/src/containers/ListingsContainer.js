@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import Listings from '../components/Listings';
 
-import { fetchListings } from '../actions/listings';
+import { fetchListings } from '../actions/listingsAction';
 
 class ListingsContainer extends Component {
   componentWillMount() {
