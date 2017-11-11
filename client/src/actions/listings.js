@@ -1,6 +1,7 @@
 import { push } from 'react-router-redux';
 import axios from 'axios';
 import { checkAuthenticationStatus } from './user';
+import { showFlashMessage } from './flashMessage';
 
 import {
   FETCH_LISTINGS_STARTED,
@@ -21,10 +22,9 @@ export function listingsFetchDataSuccess(listings) {
   };
 }
 
-export function listingsFetchDataFailure(error) {
+export function listingsFetchDataFailure() {
   return {
-    type: FETCH_LISTINGS_FAILURE,
-    error: error
+    type: FETCH_LISTINGS_FAILURE
   };
 }
 
@@ -41,16 +41,11 @@ export function fetchListings() {
         if (response.data.status === 200) {
           dispatch(listingsFetchDataSuccess(response.data.listings));
         } else {
-          dispatch(push('/', {
-            flash: {
-              type: 'alert',
-              message: response.data.message
-            }
-          }));
+          dispatch(showFlashMessage('alert', '', response.data.message));
         }
       });
-    }).catch((response) => {
-      dispatch(listingsFetchDataFailure(response.data));
+    }).catch(() => {
+      dispatch(listingsFetchDataFailure());
     });
   };
 }

@@ -10,8 +10,7 @@ import { withRouter } from "react-router-dom";
 const DeviseContainer = (DeviseComponent) => {
   function mapStatesToProps(state) {
     return {
-      isAuthenticated: state.user.isAuthenticated,
-      user: state.router.location.state ? state.router.location.state.user || {} : {}
+      isAuthenticated: state.user.isAuthenticated
     };
   }
 

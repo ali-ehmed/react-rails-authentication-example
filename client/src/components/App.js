@@ -10,7 +10,7 @@ import {
 
 // Components
 import Navigation from './shared/Navigation';
-import FlashMessage from './shared/FlashMessage';
+import FlashMessageContainer from '../containers/FlashMessageContainer';
 import Home from './Home';
 import AboutUs from './AboutUs';
 import Contact from './Contact';
@@ -22,7 +22,8 @@ import ListingsContainer from '../containers/ListingsContainer';
 import UserIsAuthenticated from '../hoc/RequireAuth';
 
 // Helpers
-import { isEmpty } from '../helpers/AppHelper';
+import { showFlashMessage } from '../actions/flashMessage';
+import { hideFlashMessage } from '../actions/flashMessage';
 
 // Action Creator
 import { verifyServerAuthentication } from '../actions/user';
@@ -42,28 +43,19 @@ class App extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
       if(typeof this.props.location.state === 'object') {
-        this.setState({ flash: this.props.location.state.flash });
+        this.props.showFlashMessage();
       } else {
-        this.setState({ flash: {} });
+        this.props.hideFlashMessage();
       }
     }
   };
 
-  renderFlashMessages = (flash) => {
-    if(!isEmpty(flash)) {
-      return(
-          <FlashMessage type={flash.type} message={flash.message} flashState={this} />
-      )
-    }
-  };
-
   render() {
-    const flashMessages = this.renderFlashMessages(this.state.flash);
     return (
       <div>
         <div className="container">
           <Navigation />
-          { flashMessages }
+          <FlashMessageContainer />
 
           <Switch>
             <Route exact path="/" component={Home}></Route>
@@ -88,10 +80,18 @@ function mapStatesToProps(state) {
   };
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, state) => {
   return {
-    verifyServerAuthentication: () => dispatch(verifyServerAuthentication())
+    verifyServerAuthentication: () => dispatch(verifyServerAuthentication()),
+    showFlashMessage: () => dispatch(showFlashMessage(
+        state.location.state.flash.type,
+        state.location.state.flash.title || '',
+        state.location.state.flash.message
+    )),
+    hideFlashMessage: () => dispatch(hideFlashMessage())
   }
 };
 
-export default (withRouter(connect(mapStatesToProps, mapDispatchToProps)(App)));
+export default (
+    withRouter(connect(mapStatesToProps, mapDispatchToProps)(App))
+);

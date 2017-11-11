@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { Form, FormGroup, Input, Button, Label, FormFeedback } from 'reactstrap';
+import { Form, FormGroup, Input, Button, Label } from 'reactstrap';
 
 export const Login = ({isAuthenticated, onLogin}) => {
   return (
@@ -37,7 +37,7 @@ export const Login = ({isAuthenticated, onLogin}) => {
   )
 };
 
-export const Register = ({isAuthenticated, user, onRegister}) => {
+export const Register = ({isAuthenticated, onRegister}) => {
   return (
     isAuthenticated ? (
       <Redirect
@@ -57,8 +57,7 @@ export const Register = ({isAuthenticated, user, onRegister}) => {
         <Form onSubmit={(e) => onRegister(e)}>
           <FormGroup>
             <Label for="email">Name</Label>
-            <Input type="text" valid={false} name="full_name" placeholder="Enter Your Name"/>
-            <FormFeedback>Oh noes! that name is already taken</FormFeedback>
+            <Input type="text" name="full_name" placeholder="Enter Your Name"/>
           </FormGroup>
           <FormGroup>
             <Label for="email">Email</Label>
@@ -80,5 +79,3 @@ export const Register = ({isAuthenticated, user, onRegister}) => {
     )
   )
 };
-
-export default Register;

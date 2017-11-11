@@ -13,7 +13,6 @@ module Api
             json! :ok, user: resource.errors.full_messages
           end
         else
-          clean_up_passwords resource
           set_minimum_password_length
           json! :forbidden, user: resource, errors: content_tag(:ul, resource.errors.full_messages.map { |msg| content_tag(:li, msg) }.join.html_safe)
         end

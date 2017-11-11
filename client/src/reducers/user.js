@@ -8,7 +8,8 @@ import {
 const initialState = {
   isFetching: true,
   isAuthenticated: false,
-  data: {}
+  data: {},
+  flash: false
 };
 
 export default function (state = initialState, action) {
@@ -29,9 +30,6 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isFetching: false,
-        data: {
-          errorMessage: action.errorMessage
-        }
       };
     case USER_AUTH_LOGOUT_SUCCESS:
       return {
