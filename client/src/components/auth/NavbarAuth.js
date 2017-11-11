@@ -26,15 +26,20 @@ class NavbarAuth extends Component {
     let { isAuthenticated, user, onLogOut } = this.props;
     return (
         !isAuthenticated ? (
-            <NavItem>
-              <RouterNavLink to="/users/sign_in" activeClassName="active" className="nav-link">Login</RouterNavLink>
-            </NavItem>
+            [
+              <NavItem key="login">
+                <RouterNavLink to="/users/sign_in" activeClassName="active" className="nav-link">Login</RouterNavLink>
+              </NavItem>,
+              <NavItem key="register">
+                <RouterNavLink to="/users/sign_up" activeClassName="active" className="nav-link">Register</RouterNavLink>
+              </NavItem>
+            ]
         ) : (
           [
-            <NavItem key="1">
+            <NavItem key="login">
               <RouterNavLink to="/listings" activeClassName="active" className="nav-link">Discover</RouterNavLink>
             </NavItem>,
-            <NavDropdown key="2" isOpen={this.state.dropdownOpen} toggle={this.dropDownToggle}>
+            <NavDropdown key="register" isOpen={this.state.dropdownOpen} toggle={this.dropDownToggle}>
               <DropdownToggle nav caret>
                 { user.full_name }
               </DropdownToggle>

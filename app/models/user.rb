@@ -9,6 +9,8 @@ class User < ApplicationRecord
 
   has_many :listings, dependent: :destroy
 
+  validates_presence_of :password_confirmation
+
   def jwt_payload
     super.merge('user_id' => id)
   end

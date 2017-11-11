@@ -1,7 +1,10 @@
+import React  from 'react';
 import axios from 'axios';
 import { push } from 'react-router-redux';
 import history from '../history';
-import { getParams } from '../helpers/AppHelper';
+import { getParams, isEmpty } from '../helpers/AppHelper';
+
+import { showFlashMessage } from './flashMessage';
 
 import {
   USER_AUTH_IN_PROGRESS,
@@ -10,33 +13,66 @@ import {
   USER_AUTH_LOGOUT_SUCCESS
 } from './types';
 
-export function authenticating() {
+
+export const authenticating = () => {
   return {
     type: USER_AUTH_IN_PROGRESS
   };
-}
+};
 
-export function authenticationSuccess(payload) {
+export const authenticationSuccess = (payload) => {
   return {
     type: USER_AUTH_SUCCESS,
     payload
   };
-}
+};
 
-export function authenticationFailure(errorMessages) {
+export const authenticationFailure = () => {
   return {
-    type: USER_AUTH_FAILURE,
-    errorMessages: errorMessages
+    type: USER_AUTH_FAILURE
   };
-}
+};
 
-export function destroyAuthentication() {
+export const destroyAuthentication = () => {
   return {
     type: USER_AUTH_LOGOUT_SUCCESS
   };
-}
+};
 
-export function signIn(params) {
+export const signUp = (params) => {
+  return (dispatch) => {
+    if (isEmpty(params)) {
+      dispatch(authenticationFailure());
+      dispatch(showFlashMessage('alert', 'Please Review Errors Below!', 'Fill out the fields'));
+      return Promise.resolve();
+    }
+
+    axios({
+      method: 'post',
+      url: '/api/users',
+      data: { user: params }
+    }).then((response) => {
+      if (response.data.status === 200) {
+        response.data.user.auth_token = response.headers.authorization;
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        dispatch(push('/', {
+          flash: {
+            type: 'notice',
+            title: 'Welcome!',
+            message: 'You have successfully registered to our site.'
+          }
+        }));
+        dispatch(authenticationSuccess(response.data.user));
+      } else {
+        console.log('Registration Error', response.data.errors);
+        dispatch(authenticationFailure());
+        dispatch(showFlashMessage('alert', 'Please Review Errors Below!', response.data.errors));
+      }
+    })
+  };
+};
+
+export const signIn = (params) => {
   return (dispatch) => {
     const request = axios({
       method: 'post',
@@ -57,20 +93,13 @@ export function signIn(params) {
         }
       }));
     }).catch((error) => {
-      console.log('Auth Error', error);
-
       dispatch(authenticationFailure());
-      dispatch(push(history.location.pathname, {
-        flash: {
-          type: 'alert',
-          message: 'Something went wrong'
-        }
-      }));
+      dispatch(showFlashMessage('alert', '', error.response.data.error));
     });
   };
-}
+};
 
-export function signOut() {
+export const signOut = () => {
   return (dispatch, getState) => {
     const request = axios({
       method: 'delete',
@@ -84,23 +113,13 @@ export function signOut() {
       if(response.data.status === 200) {
         localStorage.removeItem('user');
         dispatch(destroyAuthentication());
-        dispatch(push(history.location.pathname, {
-          flash: {
-            type: 'notice',
-            message: 'You have signed out successfully.'
-          }
-        }));
+        dispatch(showFlashMessage('notice', '', 'You have signed out successfully.'));
       } else {
-        dispatch(push(history.location.pathname, {
-          flash: {
-            type: 'alert',
-            message:'You are not signed in.'
-          }
-        }));
+        dispatch(showFlashMessage('notice', '', 'You are not signed in.'));
       }
     });
   };
-}
+};
 
 export const checkAuthenticationStatus = (response) => {
   return (dispatch) => {
@@ -110,7 +129,7 @@ export const checkAuthenticationStatus = (response) => {
       return Promise.resolve(response);
     }
   };
-}
+};
 
 export const verifyServerAuthentication = () => {
   return (dispatch) => {
@@ -131,12 +150,7 @@ export const verifyServerAuthentication = () => {
         } else {
           localStorage.removeItem('user');
           dispatch(destroyAuthentication());
-          dispatch(push(history.location.pathname, {
-            flash: {
-              type: 'alert',
-              message:'You need to sign in before continue.'
-            }
-          }));
+          dispatch(showFlashMessage('alert', '', 'Your session is expired. Please sign in again.'));
         }
       });
     } else {
@@ -145,4 +159,4 @@ export const verifyServerAuthentication = () => {
 
     return Promise.resolve();
   };
-}
+};

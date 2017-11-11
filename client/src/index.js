@@ -22,8 +22,8 @@ import registerServiceWorker from './registerServiceWorker';
 const routesMiddleware = routerMiddleware(history);
 
 const store = createStore(
-  connectRouter(history)(Reducers),
-  compose(applyMiddleware(thunk, routesMiddleware))
+    connectRouter(history)(Reducers),
+    compose(applyMiddleware(thunk, routesMiddleware))
 );
 
 store.subscribe(() => {

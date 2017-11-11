@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   devise_scope :user do
     devise_for :users, controllers: {
         sessions: 'api/users/sessions',
+        registrations: 'api/users/registrations',
     }, path: 'api/users', defaults: { format: :json }
 
     get 'api/users/verify_authentication' => 'api/users/sessions#verify_authentication'

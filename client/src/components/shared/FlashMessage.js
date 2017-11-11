@@ -1,30 +1,30 @@
 import React, { Component } from "react";
+
 import { Alert } from 'reactstrap';
 import PropTypes from "prop-types";
+import Parser from 'html-react-parser';
 
-import { FlashMessageType } from '../../helpers/AppHelper';
+import { hideFlashMessage } from '../../actions/flashMessage';
 
 class FlashMessage extends Component {
   constructor() {
     super();
-    this.state = {
-      visible: true
-    };
     this.onDismiss = this.handleAlertDismiss.bind(this);
   }
 
   handleAlertDismiss = () => {
-    this.setState({ visible: false });
-
-    // Clearing App Component Flash State on Alert Dismiss
-    this.props.flashState.setState({ flash: {} });
+    this.props.dispatch(hideFlashMessage());
   };
 
   render() {
-    const { type, message } = this.props;
     return(
-        <Alert color={FlashMessageType(type)} isOpen={this.state.visible} toggle={this.onDismiss}>
-          { message || "I am an alert and I can be dismissed!" }
+        <Alert
+            className="flash-messages"
+            color={this.props.flash.flashType}
+            isOpen={this.props.flash.visible}
+            toggle={this.onDismiss}
+        >
+          { Parser(this.props.flash.message || '') }
         </Alert>
     );
   }
