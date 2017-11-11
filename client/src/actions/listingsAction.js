@@ -1,7 +1,6 @@
-import { push } from 'react-router-redux';
 import axios from 'axios';
-import { checkAuthenticationStatus } from './user';
-import { showFlashMessage } from './flashMessage';
+import { checkAuthenticationStatus } from './userAction';
+import { showFlashMessage } from './flashMessageAction';
 
 import {
   FETCH_LISTINGS_STARTED,

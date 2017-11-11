@@ -18,15 +18,15 @@ import { Login, Register }from "../components/auth/Devise";
 import DeviseContainer from '../containers/DeviseContainer';
 import ListingsContainer from '../containers/ListingsContainer';
 
-// HOC
-import UserIsAuthenticated from '../hoc/RequireAuth';
+// Services
+import UserIsAuthenticated from '../services/RequireAuth';
 
 // Helpers
-import { showFlashMessage } from '../actions/flashMessage';
-import { hideFlashMessage } from '../actions/flashMessage';
+import { showFlashMessage } from '../actions/flashMessageAction';
+import { hideFlashMessage } from '../actions/flashMessageAction';
 
 // Action Creator
-import { verifyServerAuthentication } from '../actions/user';
+import { verifyServerAuthentication } from '../actions/userAction';
 
 class App extends Component {
   constructor() {
