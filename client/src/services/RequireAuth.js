@@ -13,7 +13,7 @@ const createRedirect = (allowRedirectBack, history) => (...args) => {
       message:'You need to sign in before continue.'
     }
   });
-}
+};
 
 const AuthFailureRedirect = withProps((props) => ({
   redirectPath: '/users/sign_in',

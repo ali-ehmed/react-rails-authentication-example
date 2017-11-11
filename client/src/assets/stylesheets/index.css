@@ -14,6 +14,8 @@
     padding: 15px 12px; }
     .listings .card .card-body .title {
       font-weight: bold; }
+    .listings .card .card-body .card-link {
+      font-size: 12px; }
 
 body {
   padding-top: 1.5rem;

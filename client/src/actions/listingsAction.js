@@ -1,33 +1,33 @@
 import axios from 'axios';
-import { checkAuthenticationStatus } from './userAction';
-import { showFlashMessage } from './flashMessageAction';
+import { checkAuthenticationStatus } from './UserAction';
+import { showFlashMessage } from './FlashMessageAction';
 
 import {
   FETCH_LISTINGS_STARTED,
   FETCH_LISTINGS_SUCCESS,
   FETCH_LISTINGS_FAILURE
-} from './types';
+} from './Types';
 
-export function listingsFetchDataStart() {
+export const listingsFetchDataStart = () => {
   return {
     type: FETCH_LISTINGS_STARTED
   };
-}
+};
 
-export function listingsFetchDataSuccess(listings) {
+export const listingsFetchDataSuccess = (listings) => {
   return {
     type: FETCH_LISTINGS_SUCCESS,
     listings: listings
   };
-}
+};
 
-export function listingsFetchDataFailure() {
+export const listingsFetchDataFailure = () => {
   return {
     type: FETCH_LISTINGS_FAILURE
   };
-}
+};
 
-export function fetchListings() {
+export const fetchListings = () => {
   return (dispatch, getState) => {
     dispatch(listingsFetchDataStart());
     const request = axios.get('api/listings', {
@@ -47,4 +47,4 @@ export function fetchListings() {
       dispatch(listingsFetchDataFailure());
     });
   };
-}
+};

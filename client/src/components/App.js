@@ -21,12 +21,10 @@ import ListingsContainer from '../containers/ListingsContainer';
 // Services
 import UserIsAuthenticated from '../services/RequireAuth';
 
-// Helpers
-import { showFlashMessage } from '../actions/flashMessageAction';
-import { hideFlashMessage } from '../actions/flashMessageAction';
-
 // Action Creator
 import { verifyServerAuthentication } from '../actions/userAction';
+import { showFlashMessage } from '../actions/flashMessageAction';
+import { hideFlashMessage } from '../actions/flashMessageAction';
 
 class App extends Component {
   constructor() {
@@ -56,7 +54,6 @@ class App extends Component {
         <div className="container">
           <Navigation />
           <FlashMessageContainer />
-
           <Switch>
             <Route exact path="/" component={Home}></Route>
             <Route path="/about_us" component={UserIsAuthenticated(AboutUs)}></Route>

@@ -3,7 +3,7 @@ import {
   USER_AUTH_SUCCESS,
   USER_AUTH_FAILURE,
   USER_AUTH_LOGOUT_SUCCESS
-} from '../actions/types.js';
+} from '../actions/Types.js';
 
 const initialState = {
   isFetching: true,

@@ -34,7 +34,11 @@ const Listings = ({listings, errorMessage, currentUser}) => {
         ) : (
           <Row>
             {
-              listings.map((item) => renderItem(item, currentUser))
+              listings === undefined || listings.length === 0 ? (
+                  <h2 className="text-muted text-center">The List is empty</h2>
+              ) : (
+                  listings.map((item) => renderItem(item, currentUser))
+              )
             }
           </Row>
         )
@@ -42,6 +46,6 @@ const Listings = ({listings, errorMessage, currentUser}) => {
 
     </div>
   )
-}
+};
 
 export default Listings;

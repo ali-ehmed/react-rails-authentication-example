@@ -1,17 +1,16 @@
-import React  from 'react';
 import axios from 'axios';
 import { push } from 'react-router-redux';
 import history from '../history';
 import { getParams, isEmpty } from '../helpers/AppHelper';
 
-import { showFlashMessage } from './flashMessageAction';
+import { showFlashMessage } from './FlashMessageAction';
 
 import {
   USER_AUTH_IN_PROGRESS,
   USER_AUTH_SUCCESS,
   USER_AUTH_FAILURE,
   USER_AUTH_LOGOUT_SUCCESS
-} from './types';
+} from './Types';
 
 
 export const authenticating = () => {

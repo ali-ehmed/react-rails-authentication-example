@@ -1,7 +1,7 @@
 import {
   FLASH_MESSAGE_SHOW,
   FLASH_MESSAGE_HIDE
-} from './types';
+} from './Types';
 
 export const showFlashMessage = (type, heading, message) => {
   return {

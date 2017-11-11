@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { signIn, signUp } from "../actions/userAction";
+import { signIn, signUp } from "../actions/UserAction";
 
 import serialize from "form-serialize";
 
@@ -14,13 +14,13 @@ const DeviseContainer = (DeviseComponent) => {
     };
   }
 
-  const mapDispatchToProps = (dispatch) => {
+  const mapDispatchToProps = (dispatch, state) => {
     return {
       onLogin: (e) => {
         e.preventDefault();
         const form = e.target;
         const data = serialize(form, { hash: true });
-        dispatch(signIn(data));
+        dispatch(signIn(data, state.history));
       },
       onRegister: (e) => {
         e.preventDefault();

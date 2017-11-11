@@ -2,7 +2,7 @@ import {
   FETCH_LISTINGS_STARTED,
   FETCH_LISTINGS_SUCCESS,
   FETCH_LISTINGS_FAILURE
-} from '../actions/types';
+} from '../actions/Types';
 
 const initialState = {
   isFetching: false,
@@ -19,7 +19,9 @@ export default function (state = initialState, action) {
       };
     case FETCH_LISTINGS_SUCCESS:
       return {
-        data: action.listings
+        ...state,
+        data: action.listings,
+        isFetching: false
       };
     case FETCH_LISTINGS_FAILURE:
       return {

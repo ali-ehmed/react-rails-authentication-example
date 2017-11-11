@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 
-import user from './userReducer';
-import listings from './listingsReducer';
-import flashMessage from './flashMessageReducer';
+import user from './UserReducer';
+import listings from './ListingsReducer';
+import flashMessage from './FlashMessageReducer';
 
 const rootReducer = combineReducers({
   user,

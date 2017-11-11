@@ -1,7 +1,7 @@
 import {
   FLASH_MESSAGE_SHOW,
   FLASH_MESSAGE_HIDE
-} from '../actions/types.js';
+} from '../actions/Types.js';
 
 import { FlashMessageType } from '../helpers/AppHelper';
 

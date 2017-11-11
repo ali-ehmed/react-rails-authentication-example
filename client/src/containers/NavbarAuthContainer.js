@@ -1,16 +1,16 @@
 import { connect } from 'react-redux';
 import NavbarAuth from '../components/auth/NavbarAuth';
 
-import { signOut } from "../actions/userAction";
+import { signOut } from "../actions/UserAction";
 
 import { withRouter } from "react-router-dom";
 
-function mapStatesToProps(state) {
+const mapStatesToProps = (state) => {
   return {
     isAuthenticated: state.user.isAuthenticated,
     user: state.user.data
   };
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
