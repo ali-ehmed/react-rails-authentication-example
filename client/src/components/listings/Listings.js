@@ -8,11 +8,13 @@ import {
 import { Row, Col, Card, CardBody, CardLink,
   CardTitle, CardSubtitle } from 'reactstrap';
 
+import FilterListings from './Filters';
+
 const renderItem = (match, item, currentUser) => {
   return (
     <Col key={item.id} md="4">
       <Card>
-        <CardBody>
+        <CardBody className="item-body">
           <CardTitle className="title">
             <Link to={`${match.url}/${item.id}`}>
               {item.name}
@@ -21,7 +23,7 @@ const renderItem = (match, item, currentUser) => {
           <CardSubtitle>{item.category}</CardSubtitle>
         </CardBody>
         <img width="100%" alt='' src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" />
-        <CardBody>
+        <CardBody className="item-body">
           <CardSubtitle>Price: <strong>{item.price}</strong></CardSubtitle>
           <hr/>
           <Link to={`${match.url}/${item.id}`} className="card-link btn btn-outline-info btn-sm">
@@ -34,24 +36,28 @@ const renderItem = (match, item, currentUser) => {
   );
 };
 
-export const Index = ({match, data, currentUser}) => {
+export const Index = ({match, data, currentUser, onFilter}) => {
   if(!(data instanceof Array)) {
     return null;
   }
 
   return (
     <div className="listings">
-      <Row>
-        {
-          data.length === 0 ? (
-              <Col md="12">
-                <h2 className="text-muted text-center">The List is empty</h2>
-              </Col>
-          ) : (
-              data.map((item) => renderItem(match, item, currentUser))
-          )
-        }
-      </Row>
+      {
+        <div>
+          <FilterListings onFilter={onFilter} />
+          <hr/>
+        </div>
+      }
+      {
+        data.length === 0 ? (
+            <h2 className="text-muted text-center">The List is empty</h2>
+        ) : (
+            <Row>
+              { data.map((item) => renderItem(match, item, currentUser)) }
+            </Row>
+        )
+      }
     </div>
   )
 };

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import serialize from "form-serialize";
 
-import { fetchListingData } from '../actions/ListingsAction';
+import { fetchListingData } from '../../actions/ListingsAction';
 
 export default function (ActionComponent) {
   class ListingsContainer extends Component {
     componentWillMount() {
       if(!this.props.isFetching) {
-        let action = '/listings';
+        let action = 'listings';
         if (ActionComponent.name === 'Show') {
           action += '/' + this.props.match.params.id;
         }
@@ -33,7 +34,13 @@ export default function (ActionComponent) {
 
   const mapDispatchToProps = (dispatch) => {
     return {
-      fetchListings: (action) => dispatch(fetchListingData(action))
+      fetchListings: (action) => dispatch(fetchListingData(action)),
+      onFilter: (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const data = serialize(form, { hash: true });
+        dispatch(fetchListingData('listings', data))
+      }
     }
   };
 

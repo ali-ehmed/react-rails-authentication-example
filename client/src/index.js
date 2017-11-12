@@ -12,6 +12,7 @@ import Reducers from './reducers';
 // Stylesheets
 import './assets/stylesheets/index.css';
 import 'bootstrap/dist/css/bootstrap.css';
+import 'react-bootstrap-slider/src/css/bootstrap-slider.min.css';
 
 // Components
 import App from './components/App';

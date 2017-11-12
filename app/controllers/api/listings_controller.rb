@@ -4,7 +4,8 @@ module Api
     before_action :set_listing, only: [:show]
 
     def index
-      json! :ok, data: current_user.listings.as_json
+      @listings = current_user.listings.search(params)
+      json! :ok, data: @listings.as_json
     end
 
     def show

@@ -23,8 +23,8 @@ import { Login, Register }from "../components/users/Devise";
 import DeviseContainer from '../containers/users/DeviseContainer';
 
 // Listings
-import { Index, Show } from '../components/Listings';
-import ListingsContainer from '../containers/ListingsContainer';
+import { Index, Show } from './listings/Listings';
+import ListingsContainer from '../containers/listings/ListingsContainer';
 
 // Services
 import UserIsAuthenticated from '../services/RequireAuth';
@@ -62,15 +62,17 @@ class App extends Component {
         <div className="container">
           <Navigation />
           <FlashMessageContainer />
-          <Switch>
-            <Route exact path="/" component={Home}></Route>
-            <Route path="/about_us" component={UserIsAuthenticated(AboutUs)}></Route>
-            <Route path="/contact_us" component={Contact}></Route>
-            <Route exact path="/listings" component={UserIsAuthenticated(ListingsContainer(Index))}></Route>
-            <Route exact path='/listings/:id' component={UserIsAuthenticated(ListingsContainer(Show))}/>
-            <Route exact path="/users/sign_in" component={DeviseContainer(Login)}></Route>
-            <Route exact path="/users/sign_up" component={DeviseContainer(Register)}></Route>
-          </Switch>
+          <div className="main">
+            <Switch>
+              <Route exact path="/" component={Home}></Route>
+              <Route path="/about_us" component={AboutUs}></Route>
+              <Route path="/contact_us" component={Contact}></Route>
+              <Route exact path="/listings" component={UserIsAuthenticated(ListingsContainer(Index))}></Route>
+              <Route exact path='/listings/:id' component={UserIsAuthenticated(ListingsContainer(Show))}/>
+              <Route exact path="/users/sign_in" component={DeviseContainer(Login)}></Route>
+              <Route exact path="/users/sign_up" component={DeviseContainer(Register)}></Route>
+            </Switch>
+          </div>
           <p className="App-intro">
             To get started, edit <code>src/App.js</code> and save to reload.
           </p>

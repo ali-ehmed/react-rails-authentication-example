@@ -20,14 +20,15 @@ export const listingsFetchDataSuccess = (listings) => {
   };
 };
 
-export const fetchListingData = (action) => {
+export const fetchListingData = (action, params = {}) => {
   return (dispatch, getState) => {
     dispatch(listingsFetchDataStart());
     let url = '/api/' + action;
     const request = axios.get(url, {
       headers: {
         'Authorization': getState().user.data.auth_token
-      }
+      },
+      params: params
     });
     request.then((response) => {
       dispatch(checkAuthenticationStatus(response)).then((response) => {

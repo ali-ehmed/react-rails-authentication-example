@@ -1,3 +1,6 @@
+.main {
+  min-height: 300px; }
+
 .nav-header {
   padding-bottom: 1rem;
   border-bottom: .05rem solid #e5e5e5;
@@ -9,13 +12,19 @@
 
 .listings .card {
   margin-bottom: 15px; }
-  .listings .card .card-body {
+  .listings .card .card-body.item-body {
     height: 100px;
     padding: 15px 12px; }
-    .listings .card .card-body .title {
+    .listings .card .card-body.item-body .title {
       font-weight: bold; }
-    .listings .card .card-body .card-link {
+    .listings .card .card-body.item-body .card-link {
       font-size: 12px; }
+
+.listings .slider-horizontal {
+  width: 100% !important; }
+
+.listings .price-labels {
+  font-size: 15px; }
 
 body {
   padding-top: 1.5rem;
