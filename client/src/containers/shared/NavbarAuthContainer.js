@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import NavbarAuth from '../components/auth/NavbarAuth';
+import NavbarAuth from '../../components/shared/NavbarAuth';
 
-import { signOut } from "../actions/UserAction";
+import { signOut } from "../../actions/UserAction";
 
 import { withRouter } from "react-router-dom";
 

@@ -4,7 +4,7 @@ import { Alert } from 'reactstrap';
 import PropTypes from "prop-types";
 import Parser from 'html-react-parser';
 
-import { hideFlashMessage } from '../../actions/flashMessageAction';
+import { hideFlashMessage } from '../../actions/FlashMessagesAction';
 
 class FlashMessage extends Component {
   constructor() {

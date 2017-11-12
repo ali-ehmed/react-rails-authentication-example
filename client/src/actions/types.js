@@ -1,6 +1,5 @@
 export const FETCH_LISTINGS_STARTED = 'fetch_listings_started';
 export const FETCH_LISTINGS_SUCCESS = 'fetch_listings_success';
-export const FETCH_LISTINGS_FAILURE = 'fetch_listings_failure';
 
 export const USER_AUTH_IN_PROGRESS = 'authentication_in_progress';
 export const USER_AUTH_SUCCESS = 'authentication_success';

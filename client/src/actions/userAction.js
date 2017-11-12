@@ -3,7 +3,7 @@ import { push } from 'react-router-redux';
 import history from '../history';
 import { getParams, isEmpty } from '../helpers/AppHelper';
 
-import { showFlashMessage } from './FlashMessageAction';
+import { showFlashMessage } from './FlashMessagesAction';
 
 import {
   USER_AUTH_IN_PROGRESS,

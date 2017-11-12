@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { signIn, signUp } from "../actions/UserAction";
+import { signIn, signUp } from "../../actions/UserAction";
 
 import serialize from "form-serialize";
 

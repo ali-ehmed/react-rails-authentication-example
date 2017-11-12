@@ -9,22 +9,30 @@ import {
 } from 'react-router-dom';
 
 // Components
+
+// Shared
 import Navigation from './shared/Navigation';
-import FlashMessageContainer from '../containers/FlashMessageContainer';
+import FlashMessageContainer from '../containers/shared/FlashMessageContainer';
+
 import Home from './Home';
 import AboutUs from './AboutUs';
 import Contact from './Contact';
-import { Login, Register }from "../components/auth/Devise";
-import DeviseContainer from '../containers/DeviseContainer';
+
+// Users
+import { Login, Register }from "../components/users/Devise";
+import DeviseContainer from '../containers/users/DeviseContainer';
+
+// Listings
+import { Index, Show } from '../components/Listings';
 import ListingsContainer from '../containers/ListingsContainer';
 
 // Services
 import UserIsAuthenticated from '../services/RequireAuth';
 
 // Action Creator
-import { verifyServerAuthentication } from '../actions/userAction';
-import { showFlashMessage } from '../actions/flashMessageAction';
-import { hideFlashMessage } from '../actions/flashMessageAction';
+import { verifyServerAuthentication } from '../actions/UserAction';
+import { showFlashMessage } from '../actions/FlashMessagesAction';
+import { hideFlashMessage } from '../actions/FlashMessagesAction';
 
 class App extends Component {
   constructor() {
@@ -58,7 +66,8 @@ class App extends Component {
             <Route exact path="/" component={Home}></Route>
             <Route path="/about_us" component={UserIsAuthenticated(AboutUs)}></Route>
             <Route path="/contact_us" component={Contact}></Route>
-            <Route path="/listings" component={UserIsAuthenticated(ListingsContainer)}></Route>
+            <Route exact path="/listings" component={UserIsAuthenticated(ListingsContainer(Index))}></Route>
+            <Route exact path='/listings/:id' component={UserIsAuthenticated(ListingsContainer(Show))}/>
             <Route exact path="/users/sign_in" component={DeviseContainer(Login)}></Route>
             <Route exact path="/users/sign_up" component={DeviseContainer(Register)}></Route>
           </Switch>

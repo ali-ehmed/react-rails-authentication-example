@@ -5,7 +5,7 @@ import {
 } from 'reactstrap';
 import { withRouter, NavLink as RouterNavLink } from 'react-router-dom';
 
-import NavbarAuthContainer from '../../containers/NavbarAuthContainer';
+import NavbarAuthContainer from '../../containers/shared/NavbarAuthContainer';
 
 class Navigation extends Component {
   constructor(props) {

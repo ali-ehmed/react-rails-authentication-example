@@ -1,11 +1,10 @@
 import axios from 'axios';
 import { checkAuthenticationStatus } from './UserAction';
-import { showFlashMessage } from './FlashMessageAction';
+import { showFlashMessage } from './FlashMessagesAction';
 
 import {
   FETCH_LISTINGS_STARTED,
   FETCH_LISTINGS_SUCCESS,
-  FETCH_LISTINGS_FAILURE
 } from './Types';
 
 export const listingsFetchDataStart = () => {
@@ -17,20 +16,15 @@ export const listingsFetchDataStart = () => {
 export const listingsFetchDataSuccess = (listings) => {
   return {
     type: FETCH_LISTINGS_SUCCESS,
-    listings: listings
+    data: listings.data
   };
 };
 
-export const listingsFetchDataFailure = () => {
-  return {
-    type: FETCH_LISTINGS_FAILURE
-  };
-};
-
-export const fetchListings = () => {
+export const fetchListingData = (action) => {
   return (dispatch, getState) => {
     dispatch(listingsFetchDataStart());
-    const request = axios.get('api/listings', {
+    let url = '/api/' + action;
+    const request = axios.get(url, {
       headers: {
         'Authorization': getState().user.data.auth_token
       }
@@ -38,13 +32,13 @@ export const fetchListings = () => {
     request.then((response) => {
       dispatch(checkAuthenticationStatus(response)).then((response) => {
         if (response.data.status === 200) {
-          dispatch(listingsFetchDataSuccess(response.data.listings));
+          dispatch(listingsFetchDataSuccess(response.data));
         } else {
           dispatch(showFlashMessage('alert', '', response.data.message));
         }
       });
-    }).catch(() => {
-      dispatch(listingsFetchDataFailure());
+    }).catch((error) => {
+      dispatch(showFlashMessage('alert', '', error.response.data.error));
     });
   };
 };

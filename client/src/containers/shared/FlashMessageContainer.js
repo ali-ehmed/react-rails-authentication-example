@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import FlashMessage from '../components/shared/FlashMessage';
+import FlashMessage from '../../components/shared/FlashMessage';
 
 function mapStatesToProps(state) {
   return {

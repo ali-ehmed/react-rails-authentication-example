@@ -18,6 +18,13 @@ class ApplicationController < ActionController::API
       conflict:               { code: 409, message: 'Conflict' }
   }
 
+  rescue_from ActiveRecord::RecordNotFound, with: proc { |e| record_not_found(e) }
+
+  def record_not_found(exception = nil)
+    resource_name = exception.message.match(/Couldn't find ([\w]+)/)[1] rescue nil
+    json! :not_found, backtrace: exception.message, message: "#{resource_name} not found"
+  end
+
   protected
 
     # Use this method in API controllers for rendering response in JSON
