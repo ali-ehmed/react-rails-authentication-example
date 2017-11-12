@@ -20,6 +20,13 @@
     .listings .card .card-body.item-body .card-link {
       font-size: 12px; }
 
+.listings .slider-horizontal {
+  width: 100% !important; }
+
+.listings .price-labels {
+  font-size: 12px;
+  font-weight: bold; }
+
 body {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem; }

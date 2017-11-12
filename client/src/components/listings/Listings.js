@@ -36,11 +36,10 @@ const renderItem = (match, item, currentUser) => {
   );
 };
 
-export const Index = ({match, data, currentUser, onFilter}) => {
+export const Index = ({match, data, isFetching, currentUser, onFilter}) => {
   if(!(data instanceof Array)) {
     return null;
   }
-
   return (
     <div className="listings">
       {
@@ -49,8 +48,11 @@ export const Index = ({match, data, currentUser, onFilter}) => {
           <hr/>
         </div>
       }
+
       {
-        data.length === 0 ? (
+        isFetching ? (
+            <h2 className="text-muted text-center">Loading...</h2>
+        ) : data.length === 0 ? (
             <h2 className="text-muted text-center">The List is empty</h2>
         ) : (
             <Row>

@@ -24,7 +24,8 @@
   width: 100% !important; }
 
 .listings .price-labels {
-  font-size: 15px; }
+  font-size: 12px;
+  font-weight: bold; }
 
 body {
   padding-top: 1.5rem;

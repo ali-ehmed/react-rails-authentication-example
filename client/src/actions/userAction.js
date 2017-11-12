@@ -124,9 +124,9 @@ export const checkAuthenticationStatus = (response) => {
   return (dispatch) => {
     if (response.data.status === 401) {
       dispatch(destroyAuthentication());
-    } else {
-      return Promise.resolve(response);
     }
+
+    return Promise.resolve(response);
   };
 };
 

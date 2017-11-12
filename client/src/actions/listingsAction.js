@@ -39,7 +39,8 @@ export const fetchListingData = (action, params = {}) => {
         }
       });
     }).catch((error) => {
-      dispatch(showFlashMessage('alert', '', error.response.data.error));
+      console.log('Listings Error', error);
+      dispatch(showFlashMessage('alert', '', 'Something went wrong'));
     });
   };
 };

@@ -16,12 +16,12 @@ module Authenticable
 
     def authenticate_user!
       unless user_id_in_token?
-        json! :unauthorized, message: 'Not Authenticated' and return
+        json! :unauthorized, message: 'Your session is expired. Please sign in again.' and return
       end
 
       @current_user = User.find_by!(id: auth_token['user_id'], jti: auth_token['jti'])
     rescue ActiveRecord::RecordNotFound, JWT::VerificationError, JWT::DecodeError
-      json! :unauthorized, message: 'Not Authenticated' and return
+      json! :unauthorized, message: 'Your session is expired. Please sign in again.' and return
     end
 
     def current_user
@@ -30,10 +30,6 @@ module Authenticable
 
     def user_signed_in?
       current_user.present?
-    end
-
-    def revoke_jwt!
-      current_user.class.revoke_jwt(nil, current_user)
     end
 
   private
@@ -49,7 +45,6 @@ module Authenticable
     end
 
     def user_id_in_token?
-      puts auth_token
       http_token && auth_token && auth_token['user_id'].to_i
     end
 end
