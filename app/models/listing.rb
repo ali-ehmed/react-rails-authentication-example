@@ -13,6 +13,10 @@ class Listing < ApplicationRecord
       conditions << "price >= #{min.to_i} and price <= #{max.to_i}"
     end
 
+    if filters[:category].present?
+      conditions << "lower(category) like '%#{filters[:category].downcase}%'"
+    end
+
     where(conditions.join(' AND '))
   end
 end

@@ -85,6 +85,12 @@ export default class FilterListings extends Component {
                         </Row>
                       </FormGroup>
                     </Col>
+                    <Col md="3">
+                      <FormGroup>
+                        <Label>Category</Label>
+                        <Input type="text" name="category" className="form-control" placeholder="Search By Category"/>
+                      </FormGroup>
+                    </Col>
                   </Row>
                   <div className="text-right">
                     <Button color="success" outline>Filter</Button>

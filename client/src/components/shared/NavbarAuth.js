@@ -52,7 +52,10 @@ class NavbarAuth extends Component {
                   Sign Out
                 </DropdownItem>
               </DropdownMenu>
-            </NavDropdown>
+            </NavDropdown>,
+            <NavItem key="sell-sell">
+              <RouterNavLink to="/sell_items" activeClassName="active" className="btn btn-outline-danger btn-sm nav-link">Sell</RouterNavLink>
+            </NavItem>
           ]
         )
     )

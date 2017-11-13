@@ -25,6 +25,7 @@ import DeviseContainer from '../containers/users/DeviseContainer';
 // Listings
 import { Index, Show } from './listings/Listings';
 import ListingsContainer from '../containers/listings/ListingsContainer';
+import SellComponent from '../components/listings/SellComponent';
 
 // Services
 import UserIsAuthenticated from '../services/RequireAuth';
@@ -69,6 +70,7 @@ class App extends Component {
               <Route path="/contact_us" component={Contact}></Route>
               <Route exact path="/listings" component={UserIsAuthenticated(ListingsContainer(Index))}></Route>
               <Route exact path='/listings/:id' component={UserIsAuthenticated(ListingsContainer(Show))}/>
+              <Route exact path='/sell_items' component={UserIsAuthenticated(SellComponent)}/>
               <Route exact path="/users/sign_in" component={DeviseContainer(Login)}></Route>
               <Route exact path="/users/sign_up" component={DeviseContainer(Register)}></Route>
             </Switch>
