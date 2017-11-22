@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.17.0",
     "bootstrap": "^4.0.0-beta.2",
+    "classnames": "^2.2.5",
     "connected-react-router": "^4.2.3",
     "form-serialize": "^0.7.2",
     "html-react-parser": "^0.4.0",

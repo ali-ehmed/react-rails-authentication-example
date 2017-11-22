@@ -14,7 +14,7 @@ module Authenticable
 
   protected
 
-    def authenticate_user!
+    def authenticate_user!(opts = {})
       unless user_id_in_token?
         json! :unauthorized, message: 'Your session is expired. Please sign in again.' and return
       end

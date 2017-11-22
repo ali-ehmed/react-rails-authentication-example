@@ -63,6 +63,10 @@ export const Register = ({isAuthenticated, onRegister}) => {
               <Input type="text" name="full_name" placeholder="Enter Your Name"/>
             </FormGroup>
             <FormGroup>
+              <Label for="username">Username</Label>
+              <Input type="text" name="username" placeholder="Enter Your Username"/>
+            </FormGroup>
+            <FormGroup>
               <Label for="email">Email</Label>
               <Input type="text" name="email" className="form-control" placeholder="Enter Email"/>
             </FormGroup>

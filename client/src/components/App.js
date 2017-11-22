@@ -20,12 +20,15 @@ import Contact from './Contact';
 
 // Users
 import { Login, Register }from "../components/users/Devise";
+import Profile from "../components/users/Profile";
 import DeviseContainer from '../containers/users/DeviseContainer';
 
 // Listings
 import { Index, Show } from './listings/Listings';
 import ListingsContainer from '../containers/listings/ListingsContainer';
 import SellComponent from '../components/listings/SellComponent';
+
+import NoRouteMatch from '../components/NoRouteMatch';
 
 // Services
 import UserIsAuthenticated from '../services/RequireAuth';
@@ -73,6 +76,10 @@ class App extends Component {
               <Route exact path='/sell_items' component={UserIsAuthenticated(SellComponent)}/>
               <Route exact path="/users/sign_in" component={DeviseContainer(Login)}></Route>
               <Route exact path="/users/sign_up" component={DeviseContainer(Register)}></Route>
+              <Route exact path="/:username" component={UserIsAuthenticated(DeviseContainer(Profile))}></Route>
+
+              {/* No Route Match Component */}
+              <Route component={NoRouteMatch}></Route>
             </Switch>
           </div>
           <p className="App-intro">

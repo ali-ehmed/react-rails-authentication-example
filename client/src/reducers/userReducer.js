@@ -2,14 +2,16 @@ import {
   USER_AUTH_IN_PROGRESS,
   USER_AUTH_SUCCESS,
   USER_AUTH_FAILURE,
-  USER_AUTH_LOGOUT_SUCCESS
+  USER_AUTH_LOGOUT_SUCCESS,
+  USER_PROFILE_UPDATE_FAILURE
 } from '../actions/Types';
 
 const initialState = {
   isFetching: true,
   isAuthenticated: false,
   data: {},
-  flash: false
+  flash: false,
+  errorMessages: ''
 };
 
 export default function (state = initialState, action) {
@@ -24,7 +26,8 @@ export default function (state = initialState, action) {
         ...state,
         isAuthenticated: true,
         isFetching: false,
-        data: action.payload
+        data: action.payload,
+        errorMessages: ''
       };
     case USER_AUTH_FAILURE:
       return {
@@ -36,6 +39,14 @@ export default function (state = initialState, action) {
         ...state,
         isFetching: false,
         isAuthenticated: false
+      };
+    case USER_PROFILE_UPDATE_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        errorMessages: action.errorMessages,
+        flash: true,
+        isAuthenticated: true
       };
     default:
       return state;

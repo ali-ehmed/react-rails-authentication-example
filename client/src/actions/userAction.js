@@ -9,9 +9,14 @@ import {
   USER_AUTH_IN_PROGRESS,
   USER_AUTH_SUCCESS,
   USER_AUTH_FAILURE,
-  USER_AUTH_LOGOUT_SUCCESS
+  USER_AUTH_LOGOUT_SUCCESS,
+  USER_PROFILE_UPDATE_FAILURE,
 } from './Types';
 
+const signInUser = (authToken, userData) => {
+  userData.auth_token = authToken;
+  localStorage.setItem('user', JSON.stringify(userData));
+};
 
 export const authenticating = () => {
   return {
@@ -38,6 +43,13 @@ export const destroyAuthentication = () => {
   };
 };
 
+export const profileUpdateFailure = (errorMessages) => {
+  return {
+    type: USER_PROFILE_UPDATE_FAILURE,
+    errorMessages: errorMessages
+  };
+};
+
 export const signUp = (params) => {
   return (dispatch) => {
     if (isEmpty(params)) {
@@ -52,8 +64,7 @@ export const signUp = (params) => {
       data: { user: params }
     }).then((response) => {
       if (response.data.status === 200) {
-        response.data.user.auth_token = response.headers.authorization;
-        localStorage.setItem('user', JSON.stringify(response.data.user));
+        signInUser(response.headers.authorization, response.data.user);
         dispatch(push('/', {
           flash: {
             type: 'notice',
@@ -71,6 +82,40 @@ export const signUp = (params) => {
   };
 };
 
+export const updateUser = (params) => {
+  return (dispatch, getState) => {
+    axios({
+      method: 'put',
+      url: '/api/users',
+      headers: {
+        'Authorization': getState().user.data.auth_token
+      },
+      data: { user: params }
+    }).then((response) => {
+      dispatch(checkAuthenticationStatus(response)).then(() => {
+        if (response.data.status === 200) {
+          let oldUsername = getState().user.data.username;
+          signInUser(getState().user.data.auth_token, response.data.user);
+          dispatch(authenticationSuccess(response.data.user));
+          if(getState().user.data.username !== oldUsername) {
+            dispatch(push("/" + getState().user.data.username, {
+              flash: {
+                type: 'notice',
+                message: 'Profile Updated Successfully.'
+              }
+            }));
+          } else {
+            dispatch(showFlashMessage('notice', '', 'Profile Updated Successfully'));
+          }
+        } else {
+          console.log('Profile Update Error', response.data.errors);
+          dispatch(profileUpdateFailure(response.data.errors));
+        }
+      });
+    });
+  }
+};
+
 export const signIn = (params) => {
   return (dispatch) => {
     const request = axios({
@@ -81,8 +126,7 @@ export const signIn = (params) => {
     request.then((response) => {
       let redirectBackUrl = getParams(history.location.search);
 
-      response.data.auth_token = response.headers.authorization;
-      localStorage.setItem('user', JSON.stringify(response.data));
+      signInUser(response.headers.authorization, response.data);
       dispatch(authenticationSuccess(response.data));
 
       dispatch(push(redirectBackUrl.redirect || '/', {
@@ -92,8 +136,13 @@ export const signIn = (params) => {
         }
       }));
     }).catch((error) => {
+      console.log('Authentication', error.response);
       dispatch(authenticationFailure());
-      dispatch(showFlashMessage('alert', '', error.response.data.error));
+      let message = 'Something went wrong';
+      if(error.response) {
+        message = error.response.data.error;
+      }
+      dispatch(showFlashMessage('alert', '', message));
     });
   };
 };

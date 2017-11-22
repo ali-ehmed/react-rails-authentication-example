@@ -7,8 +7,7 @@ import {
   Card, CardBody,
   Collapse,
   Button,
-  Form, FormGroup, Input, Label,
-  Tooltip
+  Form, FormGroup, Input, Label
 } from 'reactstrap';
 
 export default class FilterListings extends Component {

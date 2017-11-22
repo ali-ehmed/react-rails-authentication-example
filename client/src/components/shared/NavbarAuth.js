@@ -44,9 +44,7 @@ class NavbarAuth extends Component {
                 { user.full_name }
               </DropdownToggle>
               <DropdownMenu>
-                <DropdownItem header>Header</DropdownItem>
-                <DropdownItem disabled>Action</DropdownItem>
-                <DropdownItem>Another Action</DropdownItem>
+                <RouterNavLink to={`/${user.username}`} onClick={() => { this.dropDownToggle() }} activeClassName="active" className="dropdown-item">Profile</RouterNavLink>
                 <DropdownItem divider />
                 <DropdownItem onClick={(e) => onLogOut(e)}>
                   Sign Out
