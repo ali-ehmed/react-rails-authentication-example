@@ -56,12 +56,7 @@ class Profile extends Component {
       user: { ...this.state.user }
     });
 
-    // Since Profile Page route contains username so on input change dispatch
-    // It will keep navigating to user profile page based on new username
-
-    if (this.props.current_user.username === this.state.user.username) {
-      this.props.dispatch(authenticationSuccess(this.state.user));
-    }
+    this.props.dispatch(authenticationSuccess(this.state.user));
   }
 
   render() {
@@ -152,7 +147,7 @@ class Profile extends Component {
                   </FormGroup>
                   <FormGroup>
                     <Label for="username">Username</Label>
-                    <Input type="text"onChange={(e) => { this.handleUserDetailsUpdate('username', e.target.value) }} defaultValue={this.state.user.username} name="username" placeholder="Enter Your Username"/>
+                    <Input type="text" defaultValue={this.state.user.username} name="username" placeholder="Enter Your Username"/>
                   </FormGroup>
                   <FormGroup>
                     <Label for="email">Email</Label>
