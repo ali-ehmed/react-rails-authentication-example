@@ -6,6 +6,10 @@ import { getParams, isEmpty } from '../helpers/AppHelper';
 import { showFlashMessage } from './FlashMessagesAction';
 
 import {
+  ALERT_NOTIFIER
+} from '../components/shared/FlashMessage';
+
+import {
   USER_AUTH_IN_PROGRESS,
   USER_AUTH_SUCCESS,
   USER_AUTH_FAILURE,
@@ -105,11 +109,12 @@ export const updateUser = (params) => {
               }
             }));
           } else {
-            dispatch(showFlashMessage('notice', '', 'Profile Updated Successfully'));
+            dispatch(showFlashMessage('notice', '', 'Profile Updated Successfully', ALERT_NOTIFIER));
           }
         } else {
           console.log('Profile Update Error', response.data.errors);
           dispatch(profileUpdateFailure(response.data.errors));
+          dispatch(showFlashMessage('alert', 'Please Review errors below', response.data.errors, ALERT_NOTIFIER));
         }
       });
     });

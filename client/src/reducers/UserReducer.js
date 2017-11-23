@@ -45,7 +45,6 @@ export default function (state = initialState, action) {
         ...state,
         isFetching: false,
         errorMessages: action.errorMessages,
-        flash: true,
         isAuthenticated: true
       };
     default:

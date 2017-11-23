@@ -6,8 +6,9 @@ import {
   Form, FormGroup, Input, Button
 } from 'reactstrap';
 
-import FlashMessage from '../shared/FlashMessage';
+import { FlashAlertMessage } from '../shared/FlashMessage';
 import { isEmpty } from '../../helpers/AppHelper';
+import { authenticationSuccess } from '../../actions/UserAction';
 
 import NoRouteMatch from '../NoRouteMatch';
 
@@ -18,11 +19,19 @@ class Profile extends Component {
     super(props);
 
     this.toggleTab = this.toggleTab.bind(this);
+    this.handleUserDetailsUpdate = this.handleUserDetailsUpdate.bind(this);
     this.state = {
-      activeTab: '1'
+      activeTab: '1',
+      user: {}
     };
 
     this.passwordFields = {};
+  }
+
+  componentWillMount() {
+    this.setState({
+      user: this.props.current_user
+    });
   }
 
   toggleTab(tab) {
@@ -37,7 +46,21 @@ class Profile extends Component {
     if(!(isEmpty(this.passwordFields))) {
       Object.keys(this.passwordFields).map((key) => {
         this.passwordFields[key].value = "";
-      })
+      });
+    }
+  }
+
+  handleUserDetailsUpdate(field, value) {
+    this.state.user[field] = value;
+    this.setState({
+      user: { ...this.state.user }
+    });
+
+    // Since Profile Page route contains username so on input change dispatch
+    // It will keep navigating to user profile page based on new username
+
+    if (this.props.current_user.username === this.state.user.username) {
+      this.props.dispatch(authenticationSuccess(this.state.user));
     }
   }
 
@@ -48,13 +71,6 @@ class Profile extends Component {
       this.resetPasswordFields();
     }
 
-    let errors = {
-      flashType: 'danger',
-      visible: true,
-      message: "<h3 className='alert-heading'>Please Review Errors Below!</h3> " +  errorMessages,
-      close: false
-    };
-
     if(current_user.username !== this.props.match.params.username) {
       return <NoRouteMatch location={this.props.location} />;
     }
@@ -64,20 +80,15 @@ class Profile extends Component {
           <div className="container-fluid">
             <Row>
               <div className="fb-profile">
-                <img align="left" className="fb-image-lg" src="http://lorempixel.com/850/280/nightlife/5/" alt="Profile image example"/>
-                <img align="left" className="fb-image-profile thumbnail" src="http://lorempixel.com/180/180/people/9/" alt="Profile image example"/>
+                <img align="left" className="fb-image-lg" src={require('../../assets/images/download.jpg')} alt="Profile image example"/>
+                <img align="left" className="fb-image-profile thumbnail" src={require('../../assets/images/team-placeholder.jpg')} alt="Profile image example"/>
                 <div className="fb-profile-text">
-                  <h1>{ current_user.full_name }</h1>
+                  <h1>{ this.state.user.full_name }</h1>
                 </div>
               </div>
             </Row>
           </div>
           <div>
-            {
-              errorMessages ? (
-                  <FlashMessage flash={errors} />
-              ) : null
-            }
             <Row>
               <Col md="8">
                 <div data-spy="scroll" className="tabbable-panel">
@@ -137,15 +148,15 @@ class Profile extends Component {
                 <Form onSubmit={(e) => { onUpdate(e); }}>
                   <FormGroup>
                     <Label for="email">Name</Label>
-                    <Input type="text" defaultValue={current_user.full_name} name="full_name" placeholder="Enter Your Name"/>
+                    <Input type="text" onChange={(e) => { this.handleUserDetailsUpdate('full_name', e.target.value) }} defaultValue={this.state.user.full_name} name="full_name" placeholder="Enter Your Name"/>
                   </FormGroup>
                   <FormGroup>
                     <Label for="username">Username</Label>
-                    <Input type="text" defaultValue={current_user.username} name="username" placeholder="Enter Your Username"/>
+                    <Input type="text"onChange={(e) => { this.handleUserDetailsUpdate('username', e.target.value) }} defaultValue={this.state.user.username} name="username" placeholder="Enter Your Username"/>
                   </FormGroup>
                   <FormGroup>
                     <Label for="email">Email</Label>
-                    <Input type="email" defaultValue={current_user.email} name="email" placeholder="Enter Email"/>
+                    <Input type="email" onChange={(e) => { this.handleUserDetailsUpdate('email', e.target.value) }} defaultValue={this.state.user.email} name="email" placeholder="Enter Email"/>
                   </FormGroup>
                   <FormGroup>
                     <Label for="current_password">Current Password</Label>

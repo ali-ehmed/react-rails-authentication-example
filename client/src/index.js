@@ -7,7 +7,7 @@ import history from './history';
 import { ConnectedRouter, connectRouter, routerMiddleware } from 'connected-react-router';
 
 // Reducers
-import Reducers from './reducers';
+import Reducers from './reducers/Index';
 
 // Stylesheets
 import './assets/stylesheets/index.css';

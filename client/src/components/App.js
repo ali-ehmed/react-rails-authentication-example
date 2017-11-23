@@ -13,6 +13,10 @@ import {
 // Shared
 import Navigation from './shared/Navigation';
 import FlashMessageContainer from '../containers/shared/FlashMessageContainer';
+import { FlashAlertMessage, FlashAlertNotifier } from '../components/shared/FlashMessage';
+import {
+  ALERT_MESSAGE
+} from './shared/FlashMessage';
 
 import Home from './Home';
 import AboutUs from './AboutUs';
@@ -61,11 +65,15 @@ class App extends Component {
   };
 
   render() {
+    let AlertMessage  = FlashMessageContainer(FlashAlertMessage);
+    let AlertNotifier = FlashMessageContainer(FlashAlertNotifier);
     return (
       <div>
         <div className="container">
           <Navigation />
-          <FlashMessageContainer />
+          <AlertMessage />
+          <AlertNotifier />
+
           <div className="main">
             <Switch>
               <Route exact path="/" component={Home}></Route>
@@ -105,7 +113,7 @@ const mapDispatchToProps = (dispatch, state) => {
         state.location.state.flash.title || '',
         state.location.state.flash.message
     )),
-    hideFlashMessage: () => dispatch(hideFlashMessage())
+    hideFlashMessage: () => dispatch(hideFlashMessage(ALERT_MESSAGE))
   }
 };
 

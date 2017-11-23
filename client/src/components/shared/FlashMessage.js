@@ -6,14 +6,54 @@ import Parser from 'html-react-parser';
 
 import { hideFlashMessage } from '../../actions/FlashMessagesAction';
 
-class FlashMessage extends Component {
+import { Alert as BsNotifierAlert, AlertContainer } from "react-bs-notifier";
+
+export const ALERT_NOTIFIER = 'alert_notifier';
+export const ALERT_MESSAGE  = 'alert_message';
+
+export class FlashAlertNotifier extends Component {
   constructor() {
     super();
     this.onDismiss = this.handleAlertDismiss.bind(this);
   }
 
   handleAlertDismiss = () => {
-    this.props.dispatch(hideFlashMessage());
+    this.props.dispatch(hideFlashMessage(ALERT_NOTIFIER));
+  }
+
+  render() {
+    return (
+      <div>
+        <AlertContainer position="top-right">
+          {
+            this.props.flash.visibleAlertNotifier ? (
+              <BsNotifierAlert
+                type={this.props.flash.flashType}
+                headline={ this.props.flash.heading ?
+                  Parser(this.props.flash.heading || '') : undefined
+                }
+                onDismiss={this.onDismiss}
+                showIcon={true}
+                timeout={4000}
+              >
+                { Parser(this.props.flash.message || '') }
+              </BsNotifierAlert>
+            ) : null
+          }
+        </AlertContainer>
+      </div>
+    )
+  }
+}
+
+export class FlashAlertMessage extends Component {
+  constructor() {
+    super();
+    this.onDismiss = this.handleAlertDismiss.bind(this);
+  }
+
+  handleAlertDismiss = () => {
+    this.props.dispatch(hideFlashMessage(ALERT_MESSAGE));
   };
 
   render() {
@@ -21,7 +61,7 @@ class FlashMessage extends Component {
         <Alert
             className="flash-messages"
             color={this.props.flash.flashType}
-            isOpen={this.props.flash.visible}
+            isOpen={this.props.flash.visibleAlertMessage}
             toggle={this.onDismiss}
         >
           { Parser(this.props.flash.message || '') }
@@ -30,9 +70,12 @@ class FlashMessage extends Component {
   }
 }
 
-FlashMessage.propTypes = {
+FlashAlertMessage.propTypes = {
   type: PropTypes.string,
   message: PropTypes.string
 };
 
-export default FlashMessage;
+FlashAlertNotifier.propTypes = {
+  type: PropTypes.string,
+  message: PropTypes.string
+};

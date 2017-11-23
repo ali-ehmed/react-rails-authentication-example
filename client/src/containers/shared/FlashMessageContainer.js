@@ -1,10 +1,16 @@
+import React, { Component } from "react";
 import { connect } from 'react-redux';
-import FlashMessage from '../../components/shared/FlashMessage';
 
-function mapStatesToProps(state) {
-  return {
-    flash: state.flash
-  };
+export default function (FlashMessageComponent) {
+  class FlashMessageContainer extends Component {
+    render() {
+      return <FlashMessageComponent {...this.props} />;
+    }
+  }
+
+  return connect((state) => {
+    return {
+      flash: state.flash
+    };
+  })(FlashMessageContainer);
 }
-
-export default connect(mapStatesToProps, null)(FlashMessage);
