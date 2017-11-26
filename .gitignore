@@ -4,6 +4,7 @@ log/*.log
 .idea/
 
 config/database.yml
+tmp/
 # Client App React DOM
 
 # node moduules
