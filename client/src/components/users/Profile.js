@@ -6,9 +6,8 @@ import {
   Form, FormGroup, Input, Button
 } from 'reactstrap';
 
-import { FlashAlertMessage } from '../shared/FlashMessage';
 import { isEmpty } from '../../helpers/AppHelper';
-import { authenticationSuccess } from '../../actions/UserAction';
+// import { authenticationSuccess } from '../../actions/UserAction';
 
 import NoRouteMatch from '../NoRouteMatch';
 
@@ -45,15 +44,16 @@ class Profile extends Component {
   resetPasswordFields() {
     if(!(isEmpty(this.passwordFields))) {
       Object.keys(this.passwordFields).map((key) => {
-        this.passwordFields[key].value = "";
+        return this.passwordFields[key].value = "";
       });
     }
   }
 
   handleUserDetailsUpdate(field, value) {
-    this.state.user[field] = value;
+    let user = this.state.user;
+    user[field] = value;
     this.setState({
-      user: { ...this.state.user }
+      user: { ...user, }
     });
 
     // this.props.dispatch(authenticationSuccess(this.state.user));
@@ -75,8 +75,8 @@ class Profile extends Component {
           <div className="container-fluid">
             <Row>
               <div className="fb-profile">
-                <img align="left" className="fb-image-lg" src={require('../../assets/images/download.jpg')} alt="Profile image example"/>
-                <img align="left" className="fb-image-profile thumbnail" src={require('../../assets/images/team-placeholder.jpg')} alt="Profile image example"/>
+                <img align="left" className="fb-image-lg" src={require('../../assets/images/download.jpg')} alt="Profile avatar example"/>
+                <img align="left" className="fb-image-profile thumbnail" src={require('../../assets/images/team-placeholder.jpg')} alt="Profile avatar example"/>
                 <div className="fb-profile-text">
                   <h1>{ this.state.user.full_name }</h1>
                 </div>

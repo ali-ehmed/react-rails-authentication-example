@@ -21,7 +21,7 @@ const renderItem = (match, item, currentUser) => {
           </CardTitle>
           <CardSubtitle>{item.category}</CardSubtitle>
         </CardBody>
-        <img width="100%" alt='' src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" />
+        <img width="100%" alt={`item-${item.id}`} src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" />
         <CardBody className="item-body">
           <CardSubtitle>Price: <strong>{item.price}</strong></CardSubtitle>
           <hr/>
