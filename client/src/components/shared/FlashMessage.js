@@ -19,7 +19,7 @@ export class FlashAlertNotifier extends Component {
 
   handleAlertDismiss = () => {
     this.props.dispatch(hideFlashMessage(ALERT_NOTIFIER));
-  }
+  };
 
   render() {
     return (

@@ -30,7 +30,7 @@ class Profile extends Component {
 
   componentWillMount() {
     this.setState({
-      user: this.props.current_user
+      user: { ...this.props.current_user }
     });
   }
 
@@ -56,7 +56,7 @@ class Profile extends Component {
       user: { ...this.state.user }
     });
 
-    this.props.dispatch(authenticationSuccess(this.state.user));
+    // this.props.dispatch(authenticationSuccess(this.state.user));
   }
 
   render() {
